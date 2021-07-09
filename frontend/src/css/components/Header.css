@@ -1,0 +1,23 @@
+.header {
+    display: flex;
+    max-width: 100%;
+    height: 100px;
+    max-height: 100px;
+    align-content: center;
+    justify-content: space-around;
+    text-align: center;
+    border-bottom: 1px solid black;
+}
+.header span {
+    display: flex;
+    flex-direction: row;
+    margin: auto 0
+}
+.header span img {
+    height: 40px;
+    margin: auto 10px;
+}
+.header span p {
+    font-size: 40px;
+    margin: auto;
+}
