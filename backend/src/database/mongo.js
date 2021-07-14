@@ -1,12 +1,12 @@
 const { MongoClient, ObjectId } = require('mongodb')
-const { config } = require('../../config')
+const { config } = require('../config')
 
-const USER = encodeURIComponent(config.dbUser)
-const PASSWORD = encodeURIComponent(config.dbPassword)
+const USER = config.dev ? '' : encodeURIComponent(config.dbUser)
+const PASSWORD = config.dev ? '' : encodeURIComponent(config.dbPassword)
 const DB_NAME = config.dbName
 
 const MONGO_URI = config.dev 
-    ? `mongodb://${config.dbHost}/${DB_NAME}`
+    ? `mongodb://${config.dbHost}`
     : `mongodb+srv://${USER}:${PASSWORD}@${config.dbHost}:${config.dbPort}/${DB_NAME}?retryWrites=true&w=majority`
 
 
@@ -41,7 +41,7 @@ class MongoLib {
     }
 
     get(collection, id) {
-        return this.collection().then(db => {
+        return this.connect().then(db => {
             return db.collection(collection).findOne({ _id: ObjectId(id) })
         })
     }
