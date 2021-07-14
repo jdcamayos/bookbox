@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "DEBUG=app:* nodemon --exec node src/index.js",
-    "start": "NODE_ENV=production node src/index.js"
+    "start": "NODE_ENV=production node src/index.js",
+    "makeMocks": "node src/utils/scripts/gettingData.js"
   },
   "author": "",
   "license": "ISC",
@@ -14,6 +15,7 @@
     "express": "^4.17.1"
   },
   "devDependencies": {
+    "axios": "^0.21.1",
     "nodemon": "^2.0.12"
   }
 }
