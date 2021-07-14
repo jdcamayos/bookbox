@@ -110,7 +110,17 @@ Pasos para crear un backend
   - Creación de rutas para autenticación de usuarios
 - Configuracion de Librerias
   - Configuracion de MongoDB
+  
+    yarn add mongodb
+
+  Se instala la libreria mongodb, la cual contiene el driver oficial para manejar bases de datos Mongo con Nodejs
+
+  https://docs.mongodb.com/drivers/node/current/
+
     - Crear configuración para desarrollo y producción
+  
+  Se crea el archivo mongo.js con la configuración de la libreria
+  
     - Creacion de modelos de consultas
 - Creación de Modelos
 - Creación de Servicios
