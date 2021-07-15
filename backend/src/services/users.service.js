@@ -12,6 +12,16 @@ class UsersService {
         return user
     }
 
+    async getUserById({ userId }) {
+        const user = await this.mongoDB.get(this.collection, userId)
+        return user || {}
+    }
+
+    async getUsers() {
+        const users = await this.mongoDB.getAll(this.collection)
+        return users || []
+    }
+
     async createUser({ user }) {
         const { firstName, lastName, email, password } = user
         const isAdmin = user.isAdmin ? user.isAdmin : false
