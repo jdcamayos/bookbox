@@ -64,7 +64,7 @@ function booksApi(app) {
 
     router.put(
         '/:bookId',
-        validationHandler({ bookId: bookIdSchema }),
+        // validationHandler({ bookId: bookIdSchema }),
         validationHandler(updateBookSchema),
         async function (req, res, next) {
             const { bookId } = req.params
