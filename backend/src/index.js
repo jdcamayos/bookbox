@@ -9,6 +9,8 @@ const { logErrors, wrapErrors, errorHandler } = require('./utils/middlewares/err
 
 // Importing Routes
 const booksApi = require('./routes/books.routes')
+const authApi = require('./routes/auth.routes')
+const usersApi = require('./routes/users.routes')
 
 // Body parser
 app.use(express.json())
@@ -17,7 +19,10 @@ app.use(express.json())
 app.use(morgan('dev'))
 
 // Routes
+authApi(app)
+usersApi(app)
 booksApi(app)
+
 
 // Errors Middlewares
 app.use(logErrors)
