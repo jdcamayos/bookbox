@@ -5,6 +5,7 @@ const { config } = require('./config/index')
 
 // Importing Middlewares
 const morgan = require('morgan')
+const cors = require('cors')
 const { logErrors, wrapErrors, errorHandler } = require('./utils/middlewares/errorHandler')
 
 // Importing Routes
@@ -17,6 +18,9 @@ app.use(express.json())
 
 // Morgan 
 app.use(morgan('dev'))
+
+// CORS
+app.user(cors())
 
 // Routes
 authApi(app)
