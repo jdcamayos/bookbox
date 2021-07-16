@@ -1,24 +1,26 @@
-import React from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import React, { useContext } from 'react'
+import { Link, NavLink, useHistory } from 'react-router-dom'
 import routes from '../../routes/routes'
 import BookBoxLogo500 from '../../assets/images/bookbox_L500.png'
+import { AuthContext } from '../../auth/AuthContext'
+import { types } from '../../types/types'
 // import { AuthContext } from '../../auth/AuthContext'
 // import { types } from '../../types/types';
 
 export const Navbar = () => {
 
-    // const { user: {name}, dispatch } = useContext(AuthContext);
+    const { user: {name}, dispatch } = useContext(AuthContext);
 
-    // const history =  useHistory();
+    const history =  useHistory();
 
-    // const handleLogout = () => {
+    const handleLogout = () => {
 
-    //     history.replace('/login')
+        history.replace('/login')
 
-    //     dispatch ({
-    //         type: types.logout
-    //     })
-    // }
+        dispatch ({
+            type: types.logout
+        })
+    }
 
     return (
         <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
@@ -27,7 +29,7 @@ export const Navbar = () => {
                 className="navbar-brand"
                 to="/"
             >
-                <img src={BookBoxLogo500} width="30" height="30" class="d-inline-block align-top" alt="" />
+                <img src={BookBoxLogo500} width="30" height="30" className="d-inline-block align-top" alt="" />
                 BookBOx
             </Link>
 
@@ -67,12 +69,12 @@ export const Navbar = () => {
                 <ul className="navbar-nav ml-auto">
 
                     <span className="nav-item nav-link text-info">
-                        {/* {name} */}
+                        {name}
                     </span>
 
                     <button
                         className="nav-item nav-link btn"
-                    // onClick={handleLogout}
+                    onClick={handleLogout}
                     >
                         Logout
                     </button>
