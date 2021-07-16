@@ -27,7 +27,7 @@ export const LoginForm = () => {
 
 
     return (
-        <form className="form-signin">
+        <form className="form-signin text-center">
             <img src={BookBoxLogo500} alt="logo BookBox" />
             <h1 className="h3 mb-3 font-weight-normal">Ingrese sus datos</h1>
 

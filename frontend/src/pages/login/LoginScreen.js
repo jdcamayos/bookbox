@@ -3,9 +3,8 @@ import { LoginForm } from '../../components/login/LoginForm'
 
 export const LoginScreen = () => {
     return (
-        <div style={{ height: '90vh' }}>
-            <h1>loginForm</h1>
+        <main className='d-flex' style={{ height: '90vh' }}>            
             <LoginForm />
-        </div>
+        </main> 
     )
 }

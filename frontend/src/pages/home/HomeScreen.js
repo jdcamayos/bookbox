@@ -5,7 +5,7 @@ import React from 'react'
 export const HomeScreen = () => {
     return (
         <div style={{ height: '90vh' }}>
-            <h1>Landing page</h1>
+            {/* <h1>Landing page</h1> */}
             <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel">
                 <ol className="carousel-indicators">
                     <li data-target="#carouselExampleIndicators" data-slide-to="0" className="active"></li>
