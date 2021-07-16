@@ -6,6 +6,7 @@ const routes = {
     // Logged Routes
     "books": "/books",
     "book": "/book/:id",
+    "searchBooks": "/search",
     // User Routes
     "user": {
         "myBooks": "/user/:id/",
