@@ -20,7 +20,7 @@ app.use(express.json())
 app.use(morgan('dev'))
 
 // CORS
-app.user(cors())
+app.use(cors())
 
 // Routes
 authApi(app)
