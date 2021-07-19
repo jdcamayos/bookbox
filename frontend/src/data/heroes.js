@@ -8,12 +8,36 @@ export const heroes = [
         'characters':'Bruce Wayne'
     },
     {
+        'id': 'marvel-wolverine',
+        'superhero':'Wolverine', 
+        'publisher':'Marvel Comics', 
+        'alter_ego':'James Howlett',
+        'first_appearance':'The Incredible Hulk #180',
+        'characters':'James Howlett'
+    },
+    {
+        'id': 'marvel-hulk',
+        'superhero':'Hulk', 
+        'publisher':'Marvel Comics', 
+        'alter_ego':'Bruce Banner',
+        'first_appearance':'The Incredible Hulk #1',
+        'characters':'Bruce Banner'
+    },
+    {
         'id': 'dc-superman',
         'superhero':'Superman', 
         'publisher':'DC Comics', 
         'alter_ego':'Kal-El',
         'first_appearance':'Action Comics #1',
         'characters':'Kal-El'
+    },
+    {
+        'id': 'marvel-spider',
+        'superhero':'Spider Man', 
+        'publisher':'Marvel Comics', 
+        'alter_ego':'Peter Parker',
+        'first_appearance':'Amazing Fantasy #15',
+        'characters':'Peter Parker'
     },
     {
         'id': 'dc-flash',
@@ -80,14 +104,6 @@ export const heroes = [
         'characters':'Dinah Drake, Dinah Lance'
     },
     {
-        'id': 'marvel-spider',
-        'superhero':'Spider Man', 
-        'publisher':'Marvel Comics', 
-        'alter_ego':'Peter Parker',
-        'first_appearance':'Amazing Fantasy #15',
-        'characters':'Peter Parker'
-    },
-    {
         'id': 'marvel-captain',
         'superhero':'Captain America', 
         'publisher':'Marvel Comics', 
@@ -110,22 +126,6 @@ export const heroes = [
         'alter_ego':'Thor Odinson',
         'first_appearance':'Journey into Myster #83',
         'characters':'Thor Odinson'
-    },
-    {
-        'id': 'marvel-hulk',
-        'superhero':'Hulk', 
-        'publisher':'Marvel Comics', 
-        'alter_ego':'Bruce Banner',
-        'first_appearance':'The Incredible Hulk #1',
-        'characters':'Bruce Banner'
-    },
-    {
-        'id': 'marvel-wolverine',
-        'superhero':'Wolverine', 
-        'publisher':'Marvel Comics', 
-        'alter_ego':'James Howlett',
-        'first_appearance':'The Incredible Hulk #180',
-        'characters':'James Howlett'
     },
     {
         'id': 'marvel-daredevil',

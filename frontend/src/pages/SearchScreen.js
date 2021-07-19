@@ -21,6 +21,7 @@ export const SearchScreen = ({ history }) => {
 
     const handleSearch = (e) => {
         e.preventDefault();
+        console.log(formValues)
         history.push(`?q=${searchText}`);
     }
 

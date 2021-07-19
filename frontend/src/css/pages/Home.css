@@ -1,0 +1,26 @@
+.carousel-min {
+    max-height: 460px;
+}
+.col-md-3 {
+    float: left;
+}
+
+.clases-carrusel .carousel-item.active .carousel-item-book {
+    display: flex;
+    justify-content: space-around;
+}
+.clases-carrusel .carousel-item .carousel-item-book {
+
+    justify-content: space-around;
+}
+.carousel-item.clases-carrusel .carousel-item-book {
+    float: initial;
+    /* opacity: 0; */
+}
+.clases-carrusel .carousel-item.active {
+/*  */
+    /* opacity: 1; */
+}
+h1 {
+    text-align: center;
+}

@@ -1,5 +1,4 @@
 .footer {
-    display: flex;
     max-width: 100%;
     max-height: 50px;
     align-content: center;
@@ -10,5 +9,5 @@
     bottom: 0;
     width: 100%;
     display: flex;
-    position: relative;
+    position: inherit;
 }
