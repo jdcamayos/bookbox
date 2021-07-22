@@ -1,0 +1,244 @@
+// import axios from 'axios'
+import { useState } from 'react'
+import { connect } from 'react-redux'
+import axios from 'axios'
+
+import { registerRequest } from '../../actions'
+import Loading from '../Loading'
+
+const mapDispatchToProps = {
+    registerRequest,
+}
+
+function RegisterForm(props) {
+    const [form, setValues] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+        passwordRepeat: '',
+    })
+    const [showPass, setShowPass] = useState(false)
+    const [formErrors, setFormErrors] = useState([])
+    const [samePassword, setSamePassword] = useState(true)
+    const [loading, setLoading] = useState(false)
+    const [message, setMessage] = useState('')
+
+    const handleInput = event => {
+        setValues({
+            ...form,
+            [event.target.name]: event.target.value,
+        })
+    }
+
+    const handleShowPass = () => {
+        setShowPass(!showPass)
+    }
+
+    const errors = [
+        form.firstName.length > 2
+            ? null
+            : 'Nombre debe ser mayor a 2 caracteres',
+        form.lastName.length > 2
+            ? null
+            : 'Apellido debe ser mayor a 2 caracteres',
+        form.password.length > 3
+            ? null
+            : 'La contraseña debe contener al menos 4 caracteres',
+        form.password === form.passwordRepeat
+            ? null
+            : 'Contraseñas no coinciden',
+    ]
+    const verifyForm = () => {
+        setSamePassword(form.password === form.passwordRepeat)
+        setFormErrors(errors.filter(error => error !== null))
+        console.log(formErrors)
+        if (!formErrors.length) {
+            return true
+        }
+        return false
+    }
+
+    const handleSubmit = async event => {
+        event.preventDefault()
+        const isVerified = verifyForm()
+        console.log(isVerified)
+        if (isVerified) {
+            delete form.passwordRepeat
+            console.log(form)
+            const res = await signUp(form)
+            if (res) {
+                props.history.push('/profile')
+            }
+        }
+    }
+
+    const signUp = async form => {
+        const URL = 'http://localhost:4000/api/auth/sign-up/'
+        setLoading(true)
+        try {
+            const { data, status } = await axios.post(URL, form)
+            setLoading(false)
+            if (status !== 201) {
+                setMessage(
+                    <div className='card-footer text-muted'>
+                        Ops! algo salio mal, Intenta de nuevo.
+                    </div>
+                )
+                return false
+            }
+            if (status === 201) {
+                props.registerRequest(data.user)
+                return true
+            }
+            return false
+        } catch (error) {
+            setLoading(false)
+            console.log(error)
+        }
+    }
+
+    return (
+        <div className='d-flex justify-content-center text-light bg-dark'>
+            <form
+                onSubmit={handleSubmit}
+                className='text-center card text-light bg-dark mb-3'
+                style={{ maxWidth: '280px' }}
+            >
+                <div className='card-header bg-dark h3 mb-3'>Registrate</div>
+                <div className='mb-3'>
+                    <input
+                        name='firstName'
+                        type='text'
+                        className='form-control bg-warning'
+                        placeholder='Tu nombre'
+                        onChange={handleInput}
+                    />
+                </div>
+                <div className='mb-3'>
+                    <input
+                        name='lastName'
+                        type='text'
+                        className='form-control bg-warning'
+                        placeholder='Tu apellido'
+                        onChange={handleInput}
+                    />
+                </div>
+                <div className='mb-3'>
+                    <input
+                        name='email'
+                        type='email'
+                        className='form-control bg-warning'
+                        placeholder='Tu correo electronico'
+                        onChange={handleInput}
+                    />
+                </div>
+                <div className='input-group mb-3'>
+                    <input
+                        name='password'
+                        type={showPass ? 'text' : 'password'}
+                        className={`form-control  ${
+                            samePassword
+                                ? 'bg-warning'
+                                : 'border-danger bg-danger'
+                        }`}
+                        placeholder='Tu contraseña'
+                        onChange={handleInput}
+                    />
+                    <button
+                        className={`btn btn-outline-${
+                            showPass ? 'danger' : 'secondary'
+                        }`}
+                        type='button'
+                        onClick={handleShowPass}
+                    >
+                        {showPass ? (
+                            <svg
+                                xmlns='http://www.w3.org/2000/svg'
+                                width='20'
+                                height='20'
+                                fill='currentColor'
+                                className='bi bi-eye-slash-fill'
+                                viewBox='0 0 16 16'
+                            >
+                                <path d='m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7.029 7.029 0 0 0 2.79-.588zM5.21 3.088A7.028 7.028 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474L5.21 3.089z' />
+                                <path d='M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829l-2.83-2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12-.708.708z' />
+                            </svg>
+                        ) : (
+                            <svg
+                                xmlns='http://www.w3.org/2000/svg'
+                                width='20'
+                                height='20'
+                                fill='currentColor'
+                                className='bi bi-eye-fill'
+                                viewBox='0 0 16 16'
+                            >
+                                <path d='M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z' />
+                                <path d='M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z' />
+                            </svg>
+                        )}
+                    </button>
+                </div>
+                <div className='input-group mb-3'>
+                    <input
+                        name='passwordRepeat'
+                        type={showPass ? 'text' : 'password'}
+                        className={`form-control  ${
+                            samePassword
+                                ? 'bg-warning'
+                                : 'border-danger bg-danger'
+                        }`}
+                        placeholder='Tu contraseña'
+                        onChange={handleInput}
+                    />
+                    <button
+                        className={`btn btn-outline-${
+                            showPass ? 'danger' : 'secondary'
+                        }`}
+                        type='button'
+                        onClick={handleShowPass}
+                    >
+                        {showPass ? (
+                            <svg
+                                xmlns='http://www.w3.org/2000/svg'
+                                width='20'
+                                height='20'
+                                fill='currentColor'
+                                className='bi bi-eye-slash-fill'
+                                viewBox='0 0 16 16'
+                            >
+                                <path d='m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7.029 7.029 0 0 0 2.79-.588zM5.21 3.088A7.028 7.028 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474L5.21 3.089z' />
+                                <path d='M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829l-2.83-2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12-.708.708z' />
+                            </svg>
+                        ) : (
+                            <svg
+                                xmlns='http://www.w3.org/2000/svg'
+                                width='20'
+                                height='20'
+                                fill='currentColor'
+                                className='bi bi-eye-fill'
+                                viewBox='0 0 16 16'
+                            >
+                                <path d='M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z' />
+                                <path d='M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z' />
+                            </svg>
+                        )}
+                    </button>
+                </div>
+                {formErrors.length
+                    ? formErrors.map((error, index) => (
+                          <p className='h6' key={index}>
+                              {error}
+                          </p>
+                      ))
+                    : ''}
+                <button type='submit' className='btn btn-warning'>
+                    Ingresar
+                </button>
+                {loading ? <Loading /> : message}
+            </form>
+        </div>
+    )
+}
+
+export default connect(null, mapDispatchToProps)(RegisterForm)
