@@ -16,17 +16,18 @@ function authApi(app) {
         try {
             const user = await usersService.getUser({ email })
             if (!user) {
-                return res.status(404).json({
+                return res.status(205).json({
                     message: 'user not found',
                 })
             }
             if (!(await bcrypt.compare(password, user.password))) {
-                return res.status(404).json({
+                return res.status(206).json({
                     message: 'user auth error',
                 })
             }
             delete user.password
             res.status(200).json({
+                auth: true,
                 user,
                 message: 'user auth succesfully',
             })
