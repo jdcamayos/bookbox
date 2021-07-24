@@ -44,7 +44,8 @@ function authApi(app) {
             try {
                 const createdUserId = await usersService.createUser({ user })
                 res.status(201).json({
-                    data: createdUserId,
+                    auth: true,
+                    user: { _id: createdUserId, ...user, isAdmin: false },
                     message: 'user created',
                 })
             } catch (error) {
