@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-
+import CardBook from '../components/CardBook'
 const mapStateToProp = state => {
     return {
         user: state.user,
@@ -9,27 +9,37 @@ const mapStateToProp = state => {
 }
 
 function UserProfile({ user, myBooks, books }) {
-    console.log(user ? user : 'No existe', myBooks.length, books)
     return (
-        <main>
-            <h1>This is the profile page</h1>
-            <h3>Info del usuario</h3>
-            <p>{user?.auth ? user : 'No usuario'}</p>
-            <h3>Info de mis libros</h3>
+        <main className='container'>
+            <h1>
+                Bienvenido,{' '}
+                {user?.firstName ? `${user.firstName} ${user.lastName}` : ''}
+            </h1>
             <div>
+                <h2>Mis favoritos</h2>
                 {myBooks.length
                     ? myBooks.map((book, index) => (
-                          <p key={index}>{book.title}</p>
+                          <CardBook
+                              key={index}
+                              title={book.title}
+                              cover={book.cover}
+                              description={book.description}
+                          />
                       ))
-                    : 'There are no my books'}
+                    : 'No tienes libros favoritos'}
             </div>
-            <h3>Todos los libros</h3>
             <div>
-                {books.length
-                    ? books.map((book, index) => (
-                          <p key={index}>{book.title}</p>
-                      ))
-                    : 'There are no books'}
+                <h2>Estos son tus libros recomendados</h2>
+                <section className='row row-cols-1 row-cols-md-2 g-4'>
+                    {books.map((book, index) => (
+                        <CardBook
+                            key={index}
+                            title={book.title}
+                            cover={book.cover}
+                            description={book.description}
+                        />
+                    ))}
+                </section>
             </div>
         </main>
     )

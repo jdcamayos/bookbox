@@ -1,4 +1,3 @@
-// import axios from 'axios'
 import { useState } from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
@@ -23,18 +22,6 @@ function RegisterForm(props) {
     const [samePassword, setSamePassword] = useState(true)
     const [loading, setLoading] = useState(false)
     const [message, setMessage] = useState('')
-
-    const handleInput = event => {
-        setValues({
-            ...form,
-            [event.target.name]: event.target.value,
-        })
-    }
-
-    const handleShowPass = () => {
-        setShowPass(!showPass)
-    }
-
     const errors = [
         form.firstName.length > 2
             ? null
@@ -52,27 +39,32 @@ function RegisterForm(props) {
     const verifyForm = () => {
         setSamePassword(form.password === form.passwordRepeat)
         setFormErrors(errors.filter(error => error !== null))
-        console.log(formErrors)
-        if (!formErrors.length) {
+        if (formErrors.length === 0) {
             return true
         }
         return false
     }
+    const handleInput = event => {
+        setValues({
+            ...form,
+            [event.target.name]: event.target.value,
+        })
+    }
 
+    const handleShowPass = () => {
+        setShowPass(!showPass)
+    }
     const handleSubmit = async event => {
         event.preventDefault()
         const isVerified = verifyForm()
-        console.log(isVerified)
         if (isVerified) {
             delete form.passwordRepeat
-            console.log(form)
             const res = await signUp(form)
             if (res) {
                 props.history.push('/profile')
             }
         }
     }
-
     const signUp = async form => {
         const URL = 'http://localhost:4000/api/auth/sign-up/'
         setLoading(true)
@@ -233,7 +225,7 @@ function RegisterForm(props) {
                       ))
                     : ''}
                 <button type='submit' className='btn btn-warning'>
-                    Ingresar
+                    Registrar
                 </button>
                 {loading ? <Loading /> : message}
             </form>

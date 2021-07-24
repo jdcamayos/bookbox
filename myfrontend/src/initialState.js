@@ -1,4 +1,7 @@
 const initialState = {
+    auth: {
+        // token: true
+    },
     user: {},
     myBooks: [],
     books: [

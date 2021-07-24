@@ -1,7 +1,7 @@
 import { Dropdown } from 'react-bootstrap'
 import { NavLink } from 'react-router-dom'
 
-export default function NavBar({ collapse, isAdmin }) {
+export default function NavBar({ collapse, handleLogout, user }) {
     return (
         <div className={`collapse navbar-collapse ${collapse ? 'show' : ''}`}>
             {/* Content navbar collapse */}
@@ -60,7 +60,7 @@ export default function NavBar({ collapse, isAdmin }) {
                                         />
                                     </svg>
                                 </span>
-                                Mi nombre
+                                {`${user.firstName} ${user.lastName}`}
                             </Dropdown.Toggle>
 
                             <Dropdown.Menu
@@ -77,7 +77,9 @@ export default function NavBar({ collapse, isAdmin }) {
                                     </NavLink>
                                 </Dropdown.Item>
                                 <Dropdown.Divider />
-                                <Dropdown.Item>Cerrar sesión</Dropdown.Item>
+                                <Dropdown.Item onClick={handleLogout}>
+                                    Cerrar sesión
+                                </Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
                     </div>
