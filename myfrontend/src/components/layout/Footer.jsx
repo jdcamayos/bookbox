@@ -67,16 +67,15 @@ export default function Footer() {
                         </div>
                     </section>
                     <section className="col-12 col-lg-6 d-flex justify-content-center align-items-center">
-                        <p>
-                            <strong>BookBox</strong> es una tienda de libros
-                            enfocada en Lorem ipsum dolor sit amet consectetur
-                            adipisicing elit. Sequi vel nemo alias nihil, eaque
-                            qui quod. Soluta dolorem magni maiores, odio minima
-                            tempora facere ad! Ducimus quod reprehenderit
-                            mollitia atque iure laboriosam amet. Illo, sint est
-                            dolor rerum possimus quibusdam praesentium veritatis
-                            laborum dolorem at eveniet dolore cupiditate
-                            accusamus enim!
+                        <p align="justify">
+                            <strong>BookBox</strong> es una página web 
+                            con un catálogo de libros considerable de diferentes 
+                            géneros y autores, donde los usuarios puede escoger 
+                            los libros de su interés para solicitar su préstamo. 
+                            El administrador de la página BOOKBOX puede agregar 
+                            nuevos libros disponibles o editar y borrar 
+                            los libros existentes en el catálogo de acuerdo a la demanda
+                            de los mismo.
                         </p>
                     </section>
                 </div>
