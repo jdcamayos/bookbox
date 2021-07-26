@@ -1,4 +1,44 @@
-export default function CardBook({ title, cover, description }) {
+import { useState, useEffect } from 'react'
+import { connect } from 'react-redux'
+import { setFavorite, deleteFavorite } from '../actions'
+
+const mapStateToProp = state => {
+    return {
+        myBooks: state.myBooks,
+    }
+}
+const mapDispatchToProps = {
+    setFavorite,
+    deleteFavorite,
+}
+
+function CardBook(props) {
+    const { book, myBooks } = props
+    const { _id, title, cover, description } = book
+    const [isFavorite, setIsFavorite] = useState(false)
+    
+    useEffect(() => {
+        if (myBooks.length === 0) return 
+        const bookInList = myBooks.filter(book => book._id === _id)
+        if (Boolean(bookInList.length)) {
+            setIsFavorite(true)
+        }        
+    }, [])
+
+    const handleSetFavorite = () => {
+        setIsFavorite(true)
+        props.setFavorite({
+            _id,
+            title,
+            cover,
+            description,
+        })
+    }
+
+    const handleDeleteFavorite = () => {
+        setIsFavorite(false)
+        props.deleteFavorite(_id)
+    }
     return (
         <article className='col'>
             <div
@@ -17,11 +57,29 @@ export default function CardBook({ title, cover, description }) {
                         <div className='card-body'>
                             <h5 className='card-title text-warning'>{title}</h5>
                             <p className='card-text'>{description}</p>
-                            <p className='card-text'>
+
+                            {/* <p className='card-text'>
                                 <small className='text-muted'>
                                     Last updated 3 mins ago
                                 </small>
-                            </p>
+                            </p> */}
+                        </div>
+                        <div className='card-footer text-center'>
+                            {isFavorite ? (
+                                <button
+                                    className='btn btn-outline-danger'
+                                    onClick={handleDeleteFavorite}
+                                >
+                                    Eliminar
+                                </button>
+                            ) : (
+                                <button
+                                    className='btn btn-warning mx-3'
+                                    onClick={handleSetFavorite}
+                                >
+                                    Agregar a mis libros
+                                </button>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -29,3 +87,5 @@ export default function CardBook({ title, cover, description }) {
         </article>
     )
 }
+
+export default connect(mapStateToProp, mapDispatchToProps)(CardBook)

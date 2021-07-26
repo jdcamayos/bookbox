@@ -17,7 +17,7 @@ function UserProfile({ user, myBooks, books }) {
             </h1>
             <div>
                 <h2>Mis favoritos</h2>
-                {myBooks.length
+                {/* {myBooks.length
                     ? myBooks.map((book, index) => (
                           <CardBook
                               key={index}
@@ -26,19 +26,19 @@ function UserProfile({ user, myBooks, books }) {
                               description={book.description}
                           />
                       ))
-                    : 'No tienes libros favoritos'}
+                    : 'No tienes libros favoritos'} */}
             </div>
             <div>
                 <h2>Estos son tus libros recomendados</h2>
                 <section className='row row-cols-1 row-cols-md-2 g-4'>
-                    {books.map((book, index) => (
+                    {/* {books.map((book, index) => (
                         <CardBook
                             key={index}
                             title={book.title}
                             cover={book.cover}
                             description={book.description}
                         />
-                    ))}
+                    ))} */}
                 </section>
             </div>
         </main>

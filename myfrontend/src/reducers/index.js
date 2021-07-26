@@ -20,6 +20,23 @@ const reducer = (state, action) => {
                 user: action.payload.user,
                 auth: action.payload.auth,
             }
+        case actions.setFavorite:
+            return {
+                ...state,
+                myBooks: [
+                    ...state.myBooks.filter(
+                        item => item._id !== action.payload._id
+                    ),
+                    action.payload,
+                ],
+            }
+        case actions.deleteFavorite:
+            return {
+                ...state,
+                myBooks: state.myBooks.filter(
+                    items => items._id !== action.payload
+                ),
+            }
         default:
             return state
     }
