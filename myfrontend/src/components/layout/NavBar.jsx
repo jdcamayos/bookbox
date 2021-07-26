@@ -67,15 +67,13 @@ export default function NavBar({ collapse, handleLogout, user }) {
                                 className='bg-dark text-light'
                                 variant='dark'
                             >
-                                <Dropdown.Item>
-                                    <NavLink
-                                        to='/profile'
-                                        className='nav-link'
-                                        activeClassName='active'
-                                    >
-                                        Mi perfil
-                                    </NavLink>
-                                </Dropdown.Item>
+                                <NavLink
+                                    to='/profile'
+                                    className='nav-link'
+                                    activeClassName='active'
+                                >
+                                    Mi perfil
+                                </NavLink>
                                 <Dropdown.Divider />
                                 <Dropdown.Item onClick={handleLogout}>
                                     Cerrar sesión

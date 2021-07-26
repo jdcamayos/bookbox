@@ -39,6 +39,7 @@ function LoginForm(props) {
         setLoading(true)
         try {
             const { data, status } = await axios.post(URL, form)
+            console.log(data)
             setLoading(false)
             if (status === 205) {
                 setMessage(
@@ -57,7 +58,7 @@ function LoginForm(props) {
                 return false
             }
             if (status === 200) {
-                props.loginRequest(data.user)
+                props.loginRequest(data)
                 return true
             }
             return false

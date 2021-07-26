@@ -38,11 +38,9 @@ function RegisterForm(props) {
     ]
     const verifyForm = () => {
         setSamePassword(form.password === form.passwordRepeat)
-        setFormErrors(errors.filter(error => error !== null))
-        if (formErrors.length === 0) {
-            return true
-        }
-        return false
+        const filteredErrors = errors.filter(error => error !== null)
+        setFormErrors(filteredErrors)
+        return filteredErrors
     }
     const handleInput = event => {
         setValues({
@@ -56,8 +54,9 @@ function RegisterForm(props) {
     }
     const handleSubmit = async event => {
         event.preventDefault()
-        const isVerified = verifyForm()
-        if (isVerified) {
+        const isVerified = await verifyForm()
+        console.log(!isVerified.length)
+        if (!isVerified.length) {
             delete form.passwordRepeat
             const res = await signUp(form)
             if (res) {
@@ -80,7 +79,7 @@ function RegisterForm(props) {
                 return false
             }
             if (status === 201) {
-                props.registerRequest(data.user)
+                props.registerRequest(data)
                 return true
             }
             return false

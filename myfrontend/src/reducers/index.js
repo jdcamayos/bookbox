@@ -5,17 +5,20 @@ const reducer = (state, action) => {
         case actions.loginRequest:
             return {
                 ...state,
-                user: action.payload,
+                user: action.payload.user,
+                auth: action.payload.auth,
             }
         case actions.logoutRequest:
             return {
                 ...state,
                 user: action.payload,
+                auth: action.payload,
             }
         case actions.registerRequest:
             return {
                 ...state,
-                user: action.payload,
+                user: action.payload.user,
+                auth: action.payload.auth,
             }
         default:
             return state

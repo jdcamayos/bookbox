@@ -27,7 +27,9 @@ function authApi(app) {
             }
             delete user.password
             res.status(200).json({
-                auth: true,
+                auth: {
+                    token: true,
+                },
                 user,
                 message: 'user auth succesfully',
             })
@@ -44,7 +46,9 @@ function authApi(app) {
             try {
                 const createdUserId = await usersService.createUser({ user })
                 res.status(201).json({
-                    auth: true,
+                    auth: {
+                        token: true,
+                    },
                     user: { _id: createdUserId, ...user, isAdmin: false },
                     message: 'user created',
                 })

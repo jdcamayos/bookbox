@@ -1,7 +1,15 @@
 const initialState = {
-    auth: {
-        // token: true
-    },
+    // auth: {
+    //     token: true,
+    // },
+    // user: {
+    //     _id: '60f068043cff891715242095',
+    //     firstName: 'Juan',
+    //     lastName: 'Camayo',
+    //     email: 'jd.camayo@gmail.com',
+    //     isAdmin: true,
+    // },
+    auth: {},
     user: {},
     myBooks: [],
     books: [
