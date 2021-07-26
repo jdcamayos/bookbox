@@ -29,6 +29,8 @@ function RegisterForm(props) {
         form.lastName.length > 2
             ? null
             : 'Apellido debe ser mayor a 2 caracteres',
+        form.email.includes('.') ? null : 'El correo no es valido',
+        form.email.includes('@') ? null : 'El correo no es valido',
         form.password.length > 3
             ? null
             : 'La contraseña debe contener al menos 4 caracteres',
