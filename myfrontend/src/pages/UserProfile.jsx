@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import CardBook from '../components/CardBook'
+// import CardBook from '../components/CardBook'
 const mapStateToProp = state => {
     return {
         user: state.user,

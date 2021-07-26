@@ -16,14 +16,14 @@ function CardBook(props) {
     const { book, myBooks } = props
     const { _id, title, cover, description } = book
     const [isFavorite, setIsFavorite] = useState(false)
-    
+
     useEffect(() => {
-        if (myBooks.length === 0) return 
+        if (myBooks.length === 0) return
         const bookInList = myBooks.filter(book => book._id === _id)
         if (Boolean(bookInList.length)) {
             setIsFavorite(true)
-        }        
-    }, [])
+        }
+    }, [_id, myBooks])
 
     const handleSetFavorite = () => {
         setIsFavorite(true)
