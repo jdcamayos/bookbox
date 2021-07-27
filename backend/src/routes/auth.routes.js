@@ -43,7 +43,14 @@ function authApi(app) {
         validationHandler(createUserSchema),
         async function (req, res, next) {
             const { body: user } = req
+            const { email } = user
             try {
+                const userEmail = await usersService.getUser({ email })
+                if(userEmail) {
+                    return res.status(205).json({
+                        message: 'email is already exists'
+                    })
+                }
                 const createdUserId = await usersService.createUser({ user })
                 res.status(201).json({
                     auth: {
