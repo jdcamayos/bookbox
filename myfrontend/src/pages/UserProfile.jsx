@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
-// import CardBook from '../components/CardBook'
+import HeaderPage from '../components/misc/HeaderPage'
+import CardBook from '../components/CardBook'
 const mapStateToProp = state => {
     return {
         user: state.user,
@@ -9,36 +10,31 @@ const mapStateToProp = state => {
 }
 
 function UserProfile({ user, myBooks, books }) {
+    const bookExists = Boolean(myBooks.length)
     return (
         <main className='container'>
-            <h1>
-                Bienvenido,{' '}
-                {user?.firstName ? `${user.firstName} ${user.lastName}` : ''}
-            </h1>
+            <HeaderPage
+                title={`Bienvenido,
+                ${user?.firstName ? `${user.firstName} ${user.lastName}` : ''}`}
+            />
             <div>
-                <h2>Mis favoritos</h2>
-                {/* {myBooks.length
-                    ? myBooks.map((book, index) => (
-                          <CardBook
-                              key={index}
-                              title={book.title}
-                              cover={book.cover}
-                              description={book.description}
-                          />
-                      ))
-                    : 'No tienes libros favoritos'} */}
+                <h2>Mis Libros</h2>
+                <section className='row row-cols-1 row-cols-md-2 g-4'>
+                    {bookExists ? (
+                        myBooks.map((book, index) => (
+                            <CardBook key={index} book={book} />
+                        ))
+                    ) : (
+                        <p>No encontramos libros para mostrar</p>
+                    )}
+                </section>
             </div>
             <div>
                 <h2>Estos son tus libros recomendados</h2>
                 <section className='row row-cols-1 row-cols-md-2 g-4'>
-                    {/* {books.map((book, index) => (
-                        <CardBook
-                            key={index}
-                            title={book.title}
-                            cover={book.cover}
-                            description={book.description}
-                        />
-                    ))} */}
+                    {books.map((book, index) => (
+                        <CardBook key={index} book={book} />
+                    ))}
                 </section>
             </div>
         </main>

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Modal } from 'react-bootstrap'
+import RegisterForm from '../auth/RegisterForm'
 
 function AdminUserEditModal({ user, isNew }) {
     const [show, setShow] = useState(false)
@@ -24,9 +25,11 @@ function AdminUserEditModal({ user, isNew }) {
                 keyboard={false}
             >
                 <Modal.Header closeButton>
-                    <Modal.Title>Editar usuario</Modal.Title>
+                <Modal.Title>{isNew ? 'Crear usuario' : 'Editar usuario'}</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>Cuerpo del modal</Modal.Body>
+                <Modal.Body>
+                    <RegisterForm isModal />
+                </Modal.Body>
                 <Modal.Footer>
                     <button
                         className='btn btn-outline-danger'
@@ -34,9 +37,10 @@ function AdminUserEditModal({ user, isNew }) {
                     >
                         Cerrar
                     </button>
-                    {isNew ? (
-                        <button className='btn btn-warning'>Crear Usuario</button>
-                    ) : (
+                    {isNew ? // <button className='btn btn-warning'>
+                    //     Crear Usuario
+                    // </button>
+                    null : (
                         <button className='btn btn-warning'>Actualizar</button>
                     )}
                 </Modal.Footer>

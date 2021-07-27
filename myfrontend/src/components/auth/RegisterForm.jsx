@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
 import axios from 'axios'
 
@@ -10,6 +11,8 @@ const mapDispatchToProps = {
 }
 
 function RegisterForm(props) {
+    const { isModal } = props
+    const history = useHistory()
     const [form, setValues] = useState({
         firstName: '',
         lastName: '',
@@ -57,12 +60,15 @@ function RegisterForm(props) {
     const handleSubmit = async event => {
         event.preventDefault()
         const isVerified = await verifyForm()
-        console.log(!isVerified.length)
+        // console.log(!isVerified.length)
         if (!isVerified.length) {
             delete form.passwordRepeat
             const res = await signUp(form)
             if (res) {
-                props.history.push('/profile')
+                history.push('/profile')
+                if (isModal) {
+                    history.push('/admin/users')
+                }
             }
         }
     }
@@ -81,7 +87,9 @@ function RegisterForm(props) {
                 return false
             }
             if (status === 201) {
-                props.registerRequest(data)
+                if (!isModal) {
+                    props.registerRequest(data)
+                }
                 return true
             }
             return false
@@ -92,18 +100,30 @@ function RegisterForm(props) {
     }
 
     return (
-        <div className='d-flex justify-content-center text-light bg-dark'>
+        <div
+            className={`d-flex justify-content-center text-light ${
+                isModal ? '' : 'bg-dark'
+            }`}
+        >
             <form
                 onSubmit={handleSubmit}
-                className='text-center card text-light bg-dark mb-3'
+                className={`text-center card text-light border-0 ${
+                    isModal ? '' : 'bg-dark'
+                } mb-3`}
                 style={{ maxWidth: '280px' }}
             >
-                <div className='card-header bg-dark h3 mb-3'>Registrate</div>
+                {isModal ? null : (
+                    <div className='card-header bg-dark h3 mb-3'>
+                        Registrate
+                    </div>
+                )}
                 <div className='mb-3'>
                     <input
                         name='firstName'
                         type='text'
-                        className='form-control bg-warning'
+                        className={`form-control ${
+                            isModal ? 'bg-grey' : 'bg-warning'
+                        }`}
                         placeholder='Tu nombre'
                         onChange={handleInput}
                     />
@@ -112,7 +132,9 @@ function RegisterForm(props) {
                     <input
                         name='lastName'
                         type='text'
-                        className='form-control bg-warning'
+                        className={`form-control ${
+                            isModal ? '' : 'bg-warning'
+                        }`}
                         placeholder='Tu apellido'
                         onChange={handleInput}
                     />
@@ -121,7 +143,9 @@ function RegisterForm(props) {
                     <input
                         name='email'
                         type='email'
-                        className='form-control bg-warning'
+                        className={`form-control ${
+                            isModal ? '' : 'bg-warning'
+                        }`}
                         placeholder='Tu correo electronico'
                         onChange={handleInput}
                     />
@@ -132,7 +156,9 @@ function RegisterForm(props) {
                         type={showPass ? 'text' : 'password'}
                         className={`form-control  ${
                             samePassword
-                                ? 'bg-warning'
+                                ? isModal
+                                    ? ''
+                                    : 'bg-warning'
                                 : 'border-danger bg-danger'
                         }`}
                         placeholder='Tu contraseña'
@@ -178,7 +204,9 @@ function RegisterForm(props) {
                         type={showPass ? 'text' : 'password'}
                         className={`form-control  ${
                             samePassword
-                                ? 'bg-warning'
+                                ? isModal
+                                    ? ''
+                                    : 'bg-warning'
                                 : 'border-danger bg-danger'
                         }`}
                         placeholder='Tu contraseña'
@@ -225,9 +253,15 @@ function RegisterForm(props) {
                           </p>
                       ))
                     : ''}
-                <button type='submit' className='btn btn-warning'>
-                    Registrar
-                </button>
+                {isModal ? (
+                    <button type='submit' className='btn btn-warning'>
+                        Crear usuario
+                    </button>
+                ) : (
+                    <button type='submit' className='btn btn-warning'>
+                        Registrar
+                    </button>
+                )}
                 {loading ? <Loading /> : message}
             </form>
         </div>

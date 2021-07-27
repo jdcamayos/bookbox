@@ -1,22 +1,31 @@
+import { connect } from 'react-redux'
 import CardBook from '../components/CardBook'
-import { books } from '../data/books'
+import HeaderPage from '../components/misc/HeaderPage'
 
-const myBooks = books.splice(0, 10)
+const mapStateToProps = state => {
+    return {
+        user: state.user,
+        myBooks: state.myBooks,
+    }
+}
 
-export default function MyBooks() {
+function MyBooks(props) {
+    const { myBooks, user } = props
+    const bookExists = Boolean(myBooks.length)
     return (
-        <main className='container bg-books'>
-            <h1 className='mt-3'>Libros</h1>
+        <main className='container'>
+            <HeaderPage title='Mis Libros' />
             <section className='row row-cols-1 row-cols-md-2 g-4'>
-                {myBooks.map((book, index) => (
-                    <CardBook
-                        key={index}
-                        title={book.title}
-                        cover={book.cover}
-                        description={book.description}
-                    />
-                ))}
+                {bookExists ? (
+                    myBooks.map((book, index) => (
+                        <CardBook key={index} book={book} />
+                    ))
+                ) : (
+                    <p>No encontramos libros para mostrar</p>
+                )}
             </section>
         </main>
     )
 }
+
+export default connect(mapStateToProps, null)(MyBooks)
