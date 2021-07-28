@@ -11,7 +11,7 @@ function userBooksApi(app) {
     const router = express.Router()
     app.use('/api/user-books', router)
 
-    const userBooksService = UserBooksService()
+    const userBooksService = new UserBooksService()
 
     router.get(
         '/',

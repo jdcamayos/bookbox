@@ -12,6 +12,7 @@ const { logErrors, wrapErrors, errorHandler } = require('./utils/middlewares/err
 const booksApi = require('./routes/books.routes')
 const authApi = require('./routes/auth.routes')
 const usersApi = require('./routes/users.routes')
+const userBooksApi = require('./routes/userBooks.routes')
 
 // Body parser
 app.use(express.json())
@@ -26,6 +27,7 @@ app.use(cors())
 authApi(app)
 usersApi(app)
 booksApi(app)
+userBooksApi(app)
 
 
 // Errors Middlewares

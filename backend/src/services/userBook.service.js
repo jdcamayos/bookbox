@@ -17,7 +17,7 @@ class UserBooksService {
         return createdUserBookId
     }
 
-    async deleteUserBoo({ userBookId }) {
+    async deleteUserBook({ userBookId }) {
         const deletedUserBookId = await this.mongoDB.delete(this.collection, userBookId)
         return deletedUserBookId
     }
