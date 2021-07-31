@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
-import HeaderPage from '../components/misc/HeaderPage'
+import HeaderPage from 'components/misc/HeaderPage'
 
 function AdminPage() {
     const [users, setUsers] = useState([])

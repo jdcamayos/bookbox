@@ -54,25 +54,23 @@ function userBooksApi(app) {
 
     router.delete(
         '/:userBookId',
-        validationHandler(
-            { userBookId: bookIdSchema },
-            'params',
-            async function (req, res, body) {
-                const { userBookId } = req.params
-                try {
-                    const deletedUserBookId =
-                        await userBooksService.deleteUserBook({
-                            userBookId,
-                        })
-                    res.status(200).json({
-                        data: deletedUserBookId,
-                        message: 'user book deleted',
-                    })
-                } catch {
-                    next(error)
-                }
+        validationHandler({ userBookId: bookIdSchema }, 'params'),
+        async function (req, res, body) {
+            const { userBookId } = req.params
+            try {
+                const deletedUserBookId = await userBooksService.deleteUserBook(
+                    {
+                        userBookId,
+                    }
+                )
+                res.status(200).json({
+                    data: deletedUserBookId,
+                    message: 'user book deleted',
+                })
+            } catch {
+                next(error)
             }
-        )
+        }
     )
 }
 

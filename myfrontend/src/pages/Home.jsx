@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import { connect } from 'react-redux'
 
-import HomeCarousel from '../components/home/HomeCarousel'
+import HomeCarousel from 'components/home/HomeCarousel'
 
-import LoginForm from '../components/auth/LoginForm'
-import RegisterForm from '../components/auth/RegisterForm'
+import LoginForm from 'components/auth/LoginForm'
+import RegisterForm from 'components/auth/RegisterForm'
 
-import BookBoxL500 from '../assets/bookbox_L500.png'
+import BookBoxL500 from 'assets/bookbox_L500.png'
 
 const mapStateToProp = state => {
     return {

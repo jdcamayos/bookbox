@@ -1,44 +1,47 @@
 import { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
-import { setFavorite, deleteFavorite } from '../actions'
+import { setUserBook, deleteUserBook } from 'actions'
 
 const mapStateToProp = state => {
     return {
+        books: state.books,
         myBooks: state.myBooks,
     }
 }
 const mapDispatchToProps = {
-    setFavorite,
-    deleteFavorite,
+    setUserBook,
+    deleteUserBook,
 }
 
 function CardBook(props) {
-    const { book, myBooks } = props
-    const { _id, title, cover, description } = book
+    const { bookId, books, myBooks, isUserBook } = props
     const [isFavorite, setIsFavorite] = useState(false)
 
+    const [book] = books.filter(item => item._id === bookId)
+    const { title, cover, description } = book
+
     useEffect(() => {
-        if (myBooks.length === 0) return
-        const bookInList = myBooks.filter(book => book._id === _id)
-        if (Boolean(bookInList.length)) {
-            setIsFavorite(true)
+        const [bookFavorite] = myBooks.filter(item => item.bookId === bookId)
+        return () => {
+            // console.log(bookFavorite)
+            if (bookFavorite) {
+                setIsFavorite(true)
+            }
         }
-    }, [_id, myBooks])
+    }, [myBooks, bookId]) // eslint-disable-line react-hooks/exhaustive-deps
+    // if(bookFavorite) {
+    // }
+    // const handleSetFavorite = () => {
+    //     setIsFavorite(true)
+    //     props.setUserBook({
+    //         _id,
+    //     })
+    // }
 
-    const handleSetFavorite = () => {
-        setIsFavorite(true)
-        props.setFavorite({
-            _id,
-            title,
-            cover,
-            description,
-        })
-    }
-
-    const handleDeleteFavorite = () => {
-        setIsFavorite(false)
-        props.deleteFavorite(_id)
-    }
+    // const handleDeleteFavorite = () => {
+    //     setIsFavorite(false)
+    //     props.deleteUserBook(_id)
+    // }
     return (
         <article className='col'>
             <div
@@ -46,7 +49,7 @@ function CardBook(props) {
                 style={{ maxWidth: '530px' }}
             >
                 <div className='row g-0'>
-                    <div className='col-md-4'>
+                    <div className='col-md-4 card-book-img'>
                         <img
                             src={cover}
                             className='img-fluid rounded-start'
@@ -65,17 +68,21 @@ function CardBook(props) {
                             </p> */}
                         </div>
                         <div className='card-footer text-center'>
-                            {isFavorite ? (
+                            {isUserBook ? (
                                 <button
-                                    className='btn btn-outline-danger'
-                                    onClick={handleDeleteFavorite}
+                                    className='btn btn-warning mx-3'
+                                    // onClick={handleSetFavorite}
                                 >
-                                    Eliminar
+                                    Eliminar de mis libros
                                 </button>
+                            ) : isFavorite ? (
+                                <p className='text-warning'>
+                                    Este libro ya es tuyo
+                                </p>
                             ) : (
                                 <button
                                     className='btn btn-warning mx-3'
-                                    onClick={handleSetFavorite}
+                                    // onClick={handleSetFavorite}
                                 >
                                     Agregar a mis libros
                                 </button>

@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import { connect } from 'react-redux'
 import { Link, useHistory } from 'react-router-dom'
-import { logoutRequest } from '../../actions'
+import { logoutRequest } from 'actions'
 
 import NavBar from './NavBar'
-import LogoBookBoxL500 from '../../assets/bookbox_L500.png'
+import LogoBookBoxL500 from 'assets/bookbox_L500.png'
 
 const mapStateToProps = state => {
     return {

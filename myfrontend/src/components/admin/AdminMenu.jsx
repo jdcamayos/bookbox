@@ -1,5 +1,5 @@
-import HeaderPage from '../misc/HeaderPage'
-import CardAdmin from './CardAdmin'
+import HeaderPage from 'components/misc/HeaderPage'
+import CardAdmin from 'components/admin/CardAdmin'
 
 function AdminMenu() {
     return (

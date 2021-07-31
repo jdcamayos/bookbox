@@ -1,7 +1,8 @@
-import { actions } from '../actions'
+import { actions } from 'actions'
 
 const reducer = (state, action) => {
     switch (action.type) {
+        // auth
         case actions.loginRequest:
             return {
                 ...state,
@@ -13,6 +14,9 @@ const reducer = (state, action) => {
                 ...state,
                 user: action.payload,
                 auth: action.payload,
+                users: action.payload,
+                books: action.payload,
+                myBooks: action.payload,
             }
         case actions.registerRequest:
             return {
@@ -20,7 +24,73 @@ const reducer = (state, action) => {
                 user: action.payload.user,
                 auth: action.payload.auth,
             }
-        case actions.setFavorite:
+        // books
+        case actions.getBooks:
+            return {
+                ...state,
+                books: action.payload,
+            }
+        case actions.setBook:
+            return {
+                ...state,
+                books: [...state.books, action.payload],
+            }
+        case actions.updateBook:
+            return {
+                ...state,
+                books: [
+                    ...state.books.filter(
+                        item => item._id !== action.payload._id
+                    ),
+                    action.payload,
+                ],
+            }
+        case actions.deleteBook:
+            return {
+                ...state,
+                books: [
+                    ...state.books.filter(
+                        item => item._id !== action.payload._id
+                    ),
+                ],
+            }
+        // users
+        case actions.getUsers:
+            return {
+                ...state,
+                users: action.payload,
+            }
+        case actions.setUser:
+            return {
+                ...state,
+                users: [...state.users, action.payload],
+            }
+        case actions.updateUser:
+            return {
+                ...state,
+                users: [
+                    ...state.users.filter(
+                        item => item._id !== action.payload._id
+                    ),
+                    action.payload,
+                ],
+            }
+        case actions.deleteUser:
+            return {
+                ...state,
+                users: [
+                    ...state.users.filter(
+                        item => item._id !== action.payload._id
+                    ),
+                ],
+            }
+        // userBooks
+        case actions.getUserBooks:
+            return {
+                ...state,
+                myBooks: action.payload,
+            }
+        case actions.setUserBook:
             return {
                 ...state,
                 myBooks: [
@@ -30,7 +100,7 @@ const reducer = (state, action) => {
                     action.payload,
                 ],
             }
-        case actions.deleteFavorite:
+        case actions.deleteUserBook:
             return {
                 ...state,
                 myBooks: state.myBooks.filter(

@@ -1,9 +1,8 @@
 import { useState } from 'react'
 import { connect } from 'react-redux'
-import axios from 'axios'
-
-import { loginRequest } from '../../actions'
-import Loading from '../Loading'
+import AuthApi from 'api/auth'
+import { loginRequest } from 'actions'
+import Loading from 'components/Loading'
 
 const mapDispatchToProps = {
     loginRequest,
@@ -14,67 +13,37 @@ function LoginForm(props) {
         email: '',
         password: '',
     })
-
     const [loading, setLoading] = useState(false)
-
     const [message, setMessage] = useState('')
-
     const handleInput = event => {
         setValues({
             ...form,
             [event.target.name]: event.target.value,
         })
     }
-
     const handleSubmit = async event => {
         event.preventDefault()
-        const res = await signIn(form)
-        if (res) {
+        setLoading(true)
+        const authApi = new AuthApi()
+        const { data, messages } = await authApi.signIn(form)
+        setLoading(false)
+        if (data) {
+            props.loginRequest(data)
             props.history.push('/profile')
         }
-    }
-
-    const signIn = async form => {
-        const URL = 'http://localhost:4000/api/auth/sign-in/'
-        setLoading(true)
-        try {
-            const { data, status } = await axios.post(URL, form)
-            setLoading(false)
-            if (status === 205) {
-                setMessage(
-                    <div className='card-footer text-muted'>
-                        Usuario no encontrado
-                    </div>
-                )
-                return false
-            }
-            if (status === 206) {
-                setMessage(
-                    <div className='card-footer text-muted'>
-                        Contraseña incorrecta
-                    </div>
-                )
-                return false
-            }
-            if (status === 200) {
-                props.loginRequest(data)
-                return true
-            }
-            return false
-        } catch (error) {
-            setLoading(false)
-            console.log(error)
+        if (messages) {
+            setMessage(messages)
         }
     }
 
     return (
         <div className='d-flex justify-content-center text-light bg-dark'>
             <form
-                className='text-center card text-light bg-dark mb-3'
+                className='text-center card text-light bg-dark mb-3 border-0'
                 style={{ maxWidth: '280px' }}
                 onSubmit={handleSubmit}
             >
-                <div className='card-header bg-dark h3 mb-3'>Inicia sesión</div>
+                <div className='card-header bg-dark h3 mb-3 border-0'>Inicia sesión</div>
                 <div className='mb-3'>
                     <input
                         name='email'
@@ -96,7 +65,13 @@ function LoginForm(props) {
                 <button type='submit' className='btn btn-warning'>
                     Ingresar
                 </button>
-                {loading ? <Loading /> : message}
+                {loading ? (
+                    <Loading />
+                ) : (
+                    <div className='card-footer text-muted'>
+                        {message}
+                    </div>
+                )}
             </form>
         </div>
     )

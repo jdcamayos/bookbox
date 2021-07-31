@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
-import CardBook from '../components/CardBook'
-import HeaderPage from '../components/misc/HeaderPage'
+// import CardBook from 'components/CardBook'
+import HeaderPage from 'components/misc/HeaderPage'
 
 const mapStateToProp = state => {
     return {
@@ -24,8 +24,9 @@ function Books({ books }) {
                 </form>
             </HeaderPage>
             <section className='row row-cols-1 row-cols-md-2 g-4'>
-                {books.map((book, index) => (
-                    <CardBook key={index} book={book} />
+                {books.map(book => (
+                    <p key={book._id}>{book._id}</p>
+                    // <CardBook key={index} book={book} />
                 ))}
             </section>
             {/* ToDo: Pagination y Lazy Load */}

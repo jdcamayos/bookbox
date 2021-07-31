@@ -7,8 +7,7 @@ const DB_NAME = config.dbName
 
 const MONGO_URI = config.dev 
     ? `mongodb://${config.dbHost}`
-    : `mongodb+srv://${USER}:${PASSWORD}@${config.dbHost}:${config.dbPort}/${DB_NAME}?retryWrites=true&w=majority`
-
+    : `mongodb+srv://${USER}:${PASSWORD}@${config.dbHost}/test?retryWrites=true&w=majority`
 
 class MongoLib {
     constructor() {

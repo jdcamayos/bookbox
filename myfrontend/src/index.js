@@ -1,17 +1,17 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import App from './routes/App.jsx'
-import reportWebVitals from './reportWebVitals'
+import App from 'routes/App.jsx'
+import reportWebVitals from 'reportWebVitals'
 
-import './styles/style.css'
+import 'styles/style.css'
 import 'animate.css/animate.min.css'
 
 import { Provider } from 'react-redux'
 import { createStore, compose } from 'redux'
 
-import reducer from './reducers'
-import initialState from './initialState'
+import reducer from 'reducers'
+import initialState from 'initialState'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 const store = createStore(reducer, initialState, composeEnhancers())

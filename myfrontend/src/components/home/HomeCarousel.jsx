@@ -1,8 +1,8 @@
 import { Carousel } from 'react-bootstrap'
-import Image1 from '../../assets/carousel/image1.jpg'
-import Image2 from '../../assets/carousel/image2.jpg'
-import Image3 from '../../assets/carousel/image3.jpg'
-import Image4 from '../../assets/carousel/image4.jpg'
+import Image1 from 'assets/carousel/image1.jpg'
+import Image2 from 'assets/carousel/image2.jpg'
+import Image3 from 'assets/carousel/image3.jpg'
+import Image4 from 'assets/carousel/image4.jpg'
 
 const images = [
     { src: Image1, title: 'Libro recomendado', text: 'Un buen libro' },

@@ -1,10 +1,9 @@
 import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
-import axios from 'axios'
-
-import { registerRequest } from '../../actions'
-import Loading from '../Loading'
+import AuthApi from 'api/auth'
+import { registerRequest } from 'actions'
+import Loading from 'components/Loading'
 
 const mapDispatchToProps = {
     registerRequest,
@@ -60,42 +59,19 @@ function RegisterForm(props) {
     const handleSubmit = async event => {
         event.preventDefault()
         const isVerified = await verifyForm()
-        // console.log(!isVerified.length)
         if (!isVerified.length) {
             delete form.passwordRepeat
-            const res = await signUp(form)
-            if (res) {
+            setLoading(true)
+            const authApi = new AuthApi()
+            const { data, messages } = await authApi.signUp(form)
+            setLoading(false)
+            if (data) {
+                props.registerRequest(data)
                 history.push('/profile')
-                if (isModal) {
-                    history.push('/admin/users')
-                }
             }
-        }
-    }
-    const signUp = async form => {
-        const URL = 'http://localhost:4000/api/auth/sign-up/'
-        setLoading(true)
-        try {
-            const { data, status } = await axios.post(URL, form)
-            setLoading(false)
-            if (status !== 201) {
-                setMessage(
-                    <div className='card-footer text-muted'>
-                        Ops! algo salio mal, Intenta de nuevo.
-                    </div>
-                )
-                return false
+            if (messages) {
+                setMessage(messages)
             }
-            if (status === 201) {
-                if (!isModal) {
-                    props.registerRequest(data)
-                }
-                return true
-            }
-            return false
-        } catch (error) {
-            setLoading(false)
-            console.log(error)
         }
     }
 
@@ -113,7 +89,7 @@ function RegisterForm(props) {
                 style={{ maxWidth: '280px' }}
             >
                 {isModal ? null : (
-                    <div className='card-header bg-dark h3 mb-3'>
+                    <div className='card-header bg-dark h3 mb-3 border-0'>
                         Registrate
                     </div>
                 )}
@@ -262,7 +238,11 @@ function RegisterForm(props) {
                         Registrar
                     </button>
                 )}
-                {loading ? <Loading /> : message}
+                {loading ? (
+                    <Loading />
+                ) : (
+                    <div className='card-footer text-muted'>{message}</div>
+                )}
             </form>
         </div>
     )
