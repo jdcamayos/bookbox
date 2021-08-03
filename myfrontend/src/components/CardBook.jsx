@@ -2,8 +2,11 @@ import { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { setUserBook, deleteUserBook } from 'actions'
 
+import UserBooksApi from 'api/userBooks'
+
 const mapStateToProp = state => {
     return {
+        user: state.user,
         books: state.books,
         myBooks: state.myBooks,
     }
@@ -14,7 +17,7 @@ const mapDispatchToProps = {
 }
 
 function CardBook(props) {
-    const { bookId, books, myBooks, isUserBook } = props
+    const { user, bookId, books, myBooks, isUserBook, userBookId } = props
     const [isFavorite, setIsFavorite] = useState(false)
 
     const [book] = books.filter(item => item._id === bookId)
@@ -29,19 +32,36 @@ function CardBook(props) {
             }
         }
     }, [myBooks, bookId]) // eslint-disable-line react-hooks/exhaustive-deps
-    // if(bookFavorite) {
-    // }
-    // const handleSetFavorite = () => {
-    //     setIsFavorite(true)
-    //     props.setUserBook({
-    //         _id,
-    //     })
-    // }
 
-    // const handleDeleteFavorite = () => {
-    //     setIsFavorite(false)
-    //     props.deleteUserBook(_id)
-    // }
+    const handleSetUserBook = async () => {
+        const userBooksApi = new UserBooksApi()
+        const createdUserBook = await userBooksApi.createUserBook({
+            userId: user._id,
+            bookId,
+        })
+        if (createdUserBook) {
+            console.log(createdUserBook)
+            props.setUserBook()
+        }
+    }
+
+    const handleDeleteUserBook = async () => {
+        if(!isUserBook) {
+            return
+        }
+        if(userBookId) {
+            const userBooksApi = new UserBooksApi()
+            const deletedUserBook = await userBooksApi.deleteUserBook({
+                userBookId,
+            })
+            console.log(deleteUserBook)
+            if (deletedUserBook) {
+                console.log(deletedUserBook)
+                props.deleteUserBook()
+            }
+        }
+    }
+
     return (
         <article className='col'>
             <div
@@ -71,7 +91,7 @@ function CardBook(props) {
                             {isUserBook ? (
                                 <button
                                     className='btn btn-warning mx-3'
-                                    // onClick={handleSetFavorite}
+                                    onClick={handleDeleteUserBook}
                                 >
                                     Eliminar de mis libros
                                 </button>
@@ -82,7 +102,7 @@ function CardBook(props) {
                             ) : (
                                 <button
                                     className='btn btn-warning mx-3'
-                                    // onClick={handleSetFavorite}
+                                    onClick={handleSetUserBook}
                                 >
                                     Agregar a mis libros
                                 </button>

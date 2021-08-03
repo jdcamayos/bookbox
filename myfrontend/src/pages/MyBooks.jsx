@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-// import CardBook from 'components/CardBook'
+import CardBook from 'components/CardBook'
 import HeaderPage from 'components/misc/HeaderPage'
 
 const mapStateToProps = state => {
@@ -17,7 +17,8 @@ function MyBooks(props) {
             <section className='row row-cols-1 row-cols-md-2 g-4'>
                 {bookExists ? (
                     myBooks.map(book => (
-                        <p key={book._id}>{book._id}</p>
+                        // <p key={book._id}>{book._id}</p>
+                        <CardBook key={book._id} bookId={book.bookId} isUserBook/>
                         // <CardBook key={index} book={book} />
                     ))
                 ) : (

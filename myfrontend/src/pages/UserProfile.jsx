@@ -68,7 +68,12 @@ function UserProfile(props) {
                     ) : myBooks?.length ? (
                         myBooks.map(book => (
                             // <p key={book._id}>{book._id}</p>
-                            <CardBook key={book._id} bookId={book.bookId} isUserBook/>
+                            <CardBook 
+                                key={book._id} 
+                                bookId={book.bookId} 
+                                userBookId={book.userBookId}
+                                isUserBook
+                            />
                         ))
                     ) : (
                         <p>No encontramos libros para mostrar</p>
