@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { setUserBook, deleteUserBook } from 'actions'
 
-import UserBooksApi from 'api/userBooks'
+import UserBooksApi from 'services/userBooks.service'
 
 const mapStateToProp = state => {
     return {
@@ -35,13 +35,17 @@ function CardBook(props) {
 
     const handleSetUserBook = async () => {
         const userBooksApi = new UserBooksApi()
-        const createdUserBook = await userBooksApi.createUserBook({
+        const createdUserBookId = await userBooksApi.createUserBook({
             userId: user._id,
             bookId,
         })
-        if (createdUserBook) {
-            console.log(createdUserBook)
-            props.setUserBook()
+        if (createdUserBookId) {
+            // console.log(createdUserBookId)
+            props.setUserBook({
+                userBookId: createdUserBookId,
+                userId: user.id,
+                bookId
+            })
         }
     }
 
@@ -50,14 +54,15 @@ function CardBook(props) {
             return
         }
         if(userBookId) {
+            console.log(userBookId)
             const userBooksApi = new UserBooksApi()
             const deletedUserBook = await userBooksApi.deleteUserBook({
                 userBookId,
             })
-            console.log(deleteUserBook)
+            
             if (deletedUserBook) {
                 console.log(deletedUserBook)
-                props.deleteUserBook()
+                props.deleteUserBook(deleteUserBook)
             }
         }
     }
@@ -90,7 +95,7 @@ function CardBook(props) {
                         <div className='card-footer text-center'>
                             {isUserBook ? (
                                 <button
-                                    className='btn btn-warning mx-3'
+                                    className='btn btn-danger mx-3'
                                     onClick={handleDeleteUserBook}
                                 >
                                     Eliminar de mis libros

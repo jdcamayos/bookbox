@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 
-import Loading from 'components/Loading'
+import Loading from 'components/misc/Loading'
 import HeaderPage from 'components/misc/HeaderPage'
 import AdminUsersTable from 'components/admin/users/AdminUsersTable'
 import AdminUserEditModal from 'components/admin/users/AdminUserEditModal'
 
 import { getUsers } from 'actions'
-import UsersApi from 'api/users'
+import UsersApi from 'services/users.service'
 
 const mapStateToProp = state => {
     return {
@@ -20,32 +20,28 @@ const mapDispatchToProps = {
 }
 
 function AdminUsers(props) {
-    // const { users } = props
+    const { users } = props
     const [loading, setLoading] = useState(true)
 
     const fetchUsers = async () => {
-        // if (users?.length > 0) {
-        //     return
-        // }
         const usersApi = new UsersApi()
         const fetchedUsers = await usersApi.getUsers()
-        props.getUsers(fetchedUsers)
+        props.getUsers(fetchedUsers.data)
         setLoading(false)
-        // console.log(users)
     }
 
     useEffect(() => {
-        setLoading(true)
         fetchUsers()
     }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+    if (loading) return <Loading />
 
     return (
         <main className='container'>
             <HeaderPage title='Administración de usuarios'>
                 <AdminUserEditModal isNew />
             </HeaderPage>
-
-            {loading ? <Loading /> : <AdminUsersTable />}
+            <AdminUsersTable users={users} />
         </main>
     )
 }

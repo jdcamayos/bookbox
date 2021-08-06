@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { connect } from 'react-redux'
-import AuthApi from 'api/auth'
+import AuthApi from 'services/auth.service'
 import { loginRequest } from 'actions'
-import Loading from 'components/Loading'
+import Loading from 'components/misc/Loading'
 
 const mapDispatchToProps = {
     loginRequest,
@@ -25,14 +25,19 @@ function LoginForm(props) {
         event.preventDefault()
         setLoading(true)
         const authApi = new AuthApi()
-        const { data, messages } = await authApi.signIn(form)
+        const data = await authApi.signIn(form)
         setLoading(false)
-        if (data) {
+        if (data.token && data.user) {
             props.loginRequest(data)
             props.history.push('/profile')
+            window.localStorage.setItem('tokenSession', data.token)
+            // window.localStorage.setItem(
+            //     'userSession',
+            //     JSON.stringify(data.user)
+            // )
         }
-        if (messages) {
-            setMessage(messages)
+        if (data.message) {
+            setMessage(data.message)
         }
     }
 
@@ -43,7 +48,9 @@ function LoginForm(props) {
                 style={{ maxWidth: '280px' }}
                 onSubmit={handleSubmit}
             >
-                <div className='card-header bg-dark h3 mb-3 border-0'>Inicia sesión</div>
+                <div className='card-header bg-dark h3 mb-3 border-0'>
+                    Inicia sesión
+                </div>
                 <div className='mb-3'>
                     <input
                         name='email'
@@ -68,9 +75,7 @@ function LoginForm(props) {
                 {loading ? (
                     <Loading />
                 ) : (
-                    <div className='card-footer text-muted'>
-                        {message}
-                    </div>
+                    <div className='card-footer text-muted'>{message}</div>
                 )}
             </form>
         </div>

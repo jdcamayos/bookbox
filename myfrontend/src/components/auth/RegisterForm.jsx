@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
-import AuthApi from 'api/auth'
+import AuthApi from 'services/auth.service'
 import { registerRequest } from 'actions'
-import Loading from 'components/Loading'
+import Loading from 'components/misc/Loading'
 
 const mapDispatchToProps = {
     registerRequest,
@@ -63,14 +63,20 @@ function RegisterForm(props) {
             delete form.passwordRepeat
             setLoading(true)
             const authApi = new AuthApi()
-            const { data, messages } = await authApi.signUp(form)
+            const data = await authApi.signUp(form)
             setLoading(false)
-            if (data) {
+            if (data.token && data.user) {
+                console.log(data)
                 props.registerRequest(data)
                 history.push('/profile')
+                window.localStorage.setItem('tokenSession', data.token)
+                // window.localStorage.setItem(
+                //     'userSession',
+                //     JSON.stringify(data.user)
+                // )
             }
-            if (messages) {
-                setMessage(messages)
+            if (data.message) {
+                setMessage(data.message)
             }
         }
     }

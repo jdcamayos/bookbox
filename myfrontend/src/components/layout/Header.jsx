@@ -24,6 +24,8 @@ function Header(props) {
     const [collapse, setCollapse] = useState(false)
     const handleLogout = () => {
         props.logoutRequest({})
+        window.localStorage.removeItem('tokenSession')
+        window.localStorage.removeItem('userSession')
         history.push('/home')
     }
     return (

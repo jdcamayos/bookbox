@@ -1,14 +1,7 @@
-import { connect } from 'react-redux'
-import CardBook from 'components/CardBook'
+import BooksContainer from 'components/books/BooksContainer'
 import HeaderPage from 'components/misc/HeaderPage'
 
-const mapStateToProp = state => {
-    return {
-        books: state.books,
-    }
-}
-
-function Books({ books }) {
+function Books() {
     return (
         <main className='container'>
             <HeaderPage title='Libros'>
@@ -23,16 +16,9 @@ function Books({ books }) {
                     </button>
                 </form>
             </HeaderPage>
-            <section className='row row-cols-1 row-cols-md-2 g-4'>
-                {books.map(book => (
-                    // <p key={book._id}>{book._id}</p>
-                    <CardBook key={book._id} bookId={book._id} />
-                    // <CardBook key={index} book={book} />
-                ))}
-            </section>
-            {/* ToDo: Pagination y Lazy Load */}
+            <BooksContainer />
         </main>
     )
 }
 
-export default connect(mapStateToProp, null)(Books)
+export default Books

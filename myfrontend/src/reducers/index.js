@@ -7,7 +7,7 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 user: action.payload.user,
-                auth: action.payload.auth,
+                auth: { token: action.payload.token },
             }
         case actions.logoutRequest:
             return {
@@ -22,7 +22,7 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 user: action.payload.user,
-                auth: action.payload.auth,
+                auth: { token: action.payload.token },
             }
         // books
         case actions.getBooks:

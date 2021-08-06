@@ -4,7 +4,7 @@ import { Modal } from 'react-bootstrap'
 
 import BookForm from 'components/admin/books/BookForm'
 
-import BooksApi from 'api/books'
+import BooksApi from 'services/books.service'
 import { setBook, updateBook } from 'actions'
 
 const mapDispatchToProps = {

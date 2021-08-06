@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const backURL = 'https://bookboxbackend.herokuapp.com/api'
+const backURL = process.env.BACK_URL + '/api'
 
 export default class UsersApi {
     constructor() {

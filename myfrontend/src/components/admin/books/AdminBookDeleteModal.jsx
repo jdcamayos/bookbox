@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { connect } from 'react-redux'
 import { Modal } from 'react-bootstrap'
 
-import BooksApi from 'api/books'
+import BooksApi from 'services/books.service'
 import { deleteBook } from 'actions'
 
 const mapDispatchToProps = {

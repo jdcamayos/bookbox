@@ -3,7 +3,7 @@ import { Modal } from 'react-bootstrap'
 
 import UserForm from 'components/admin/users/UserForm'
 
-import UsersApi from 'api/users'
+import UsersApi from 'services/users.service'
 import { setUser, updateUser } from 'actions'
 import { connect } from 'react-redux'
 

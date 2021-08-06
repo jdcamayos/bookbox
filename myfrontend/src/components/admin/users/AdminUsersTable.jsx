@@ -1,15 +1,7 @@
-import { connect } from 'react-redux'
 import AdminUserRow from './AdminUserRow'
-
-const mapStateToProp = state => {
-    return {
-        users: state.users,
-    }
-}
 
 function AdminUsersTable(props) {
     const { users } = props
-
     return (
         <section className='mx-2'>
             <table className='table table-striped table-hover'>
@@ -34,4 +26,4 @@ function AdminUsersTable(props) {
     )
 }
 
-export default connect(mapStateToProp, null)(AdminUsersTable)
+export default AdminUsersTable

@@ -2,10 +2,8 @@ import AdminBookDeleteModal from 'components/admin/books/AdminBookDeleteModal'
 import AdminBookEditModal from 'components/admin/books/AdminBookEditModal'
 
 function AdminBookRow(props) {
-
     const { book } = props
     const { title, author, date } = book
-    
     return (
         <tr>
             <th scope='row'></th>

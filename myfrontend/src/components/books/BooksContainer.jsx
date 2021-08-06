@@ -1,13 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 
-import Loading from 'components/misc/Loading'
-import HeaderPage from 'components/misc/HeaderPage'
-import AdminBooksTable from 'components/admin/books/AdminBooksTable'
-import AdminBookEditModal from './AdminBookEditModal'
-
-import { getBooks } from 'actions'
 import BooksApi from 'services/books.service'
+import { getBooks } from 'actions'
+
+import BookCard from 'components/books/BookCard'
+import Loading from 'components/misc/Loading'
 
 const mapStateToProp = state => {
     return {
@@ -19,7 +17,7 @@ const mapDispatchToProps = {
     getBooks,
 }
 
-function AdminBooks(props) {
+function BooksContainer(props) {
     const { books } = props
     const [loading, setLoading] = useState(true)
 
@@ -37,14 +35,12 @@ function AdminBooks(props) {
     if (loading) return <Loading />
 
     return (
-        <main className='container'>
-            <HeaderPage title='Administación de libros'>
-                <AdminBookEditModal isNew />
-            </HeaderPage>
-            <AdminBooksTable books={books} />
-            
-        </main>
+        <section className='row row-cols-1 row-cols-md-2 g-4'>
+            {books.map(book => (
+                <BookCard key={book._id} book={book} />
+            ))}
+        </section>
     )
 }
 
-export default connect(mapStateToProp, mapDispatchToProps)(AdminBooks)
+export default connect(mapStateToProp, mapDispatchToProps)(BooksContainer)

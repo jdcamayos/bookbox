@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { connect } from 'react-redux'
 import { Modal } from 'react-bootstrap'
 
-import UsersApi from 'api/users'
+import UsersApi from 'services/users.service'
 import { deleteUser } from 'actions'
 
 const mapDispatchToProps = {

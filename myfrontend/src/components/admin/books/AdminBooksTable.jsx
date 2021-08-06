@@ -1,17 +1,7 @@
-import { connect } from 'react-redux'
-
 import AdminBookRow from 'components/admin/books/AdminBookRow'
 
-const mapStateToProp = state => {
-    return {
-        books: state.books,
-    }
-}
-
 function AdminBooksTable(props) {
-
     const { books } = props
-    
     return (
         <section className='mx-2'>
             <table className='table table-striped table-hover'>
@@ -37,4 +27,4 @@ function AdminBooksTable(props) {
     )
 }
 
-export default connect(mapStateToProp, null)(AdminBooksTable)
+export default AdminBooksTable

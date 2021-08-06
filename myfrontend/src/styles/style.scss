@@ -69,12 +69,23 @@
     cursor: pointer;
 }
 
+.card-book {
+    max-width: 530px;
+    height: 250px;
+}
+
 .card-book-img {
     max-width: 150px;
     min-height: 200px;
+    height: 200px;
     overflow: hidden;
 }
 
 .card-book-img img {
     height: 100%;
+}
+
+.card-body-book {
+    height: 170px;
+    overflow: hidden;
 }
