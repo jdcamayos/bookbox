@@ -5,6 +5,8 @@ import AdminBooks from 'components/admin/books/AdminBooks'
 import AdminMenu from 'components/admin/AdminMenu'
 import AdminUsers from 'components/admin/users/AdminUsers'
 import Layout from 'components/layout/Layout'
+import BookInfo from 'components/books/BookInfo'
+
 // Pages
 import Books from 'pages/Books'
 import Home from 'pages/Home'
@@ -51,13 +53,22 @@ function App(props) {
                         path='/profile'
                         component={UserProfile}
                     />
+                    <PrivateRoute
+                        exact
+                        path='/book/:bookId'
+                        component={BookInfo}
+                    />
                     <AdminRoute exact path='/admin' component={AdminMenu} />
                     <AdminRoute
                         exact
                         path='/admin/users'
                         component={AdminUsers}
                     />
-                    <Route exact path='/admin/books' component={AdminBooks} />
+                    <AdminRoute
+                        exact
+                        path='/admin/books'
+                        component={AdminBooks}
+                    />
                     <PrivateRoute component={NotFound} />
                 </Switch>
             </Layout>

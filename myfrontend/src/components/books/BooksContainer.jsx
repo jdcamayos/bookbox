@@ -36,9 +36,11 @@ function BooksContainer(props) {
 
     return (
         <section className='row row-cols-1 row-cols-md-2 g-4'>
-            {books.map(book => (
-                <BookCard key={book._id} book={book} />
-            ))}
+            {books ? (
+                books.map(book => <BookCard key={book._id} book={book} />)
+            ) : (
+                <p>No encontramos libros</p>
+            )}
         </section>
     )
 }
