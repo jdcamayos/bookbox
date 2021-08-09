@@ -1,12 +1,11 @@
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import { connect } from 'react-redux'
+import { BrowserRouter as Router, Redirect, Route, Switch, } from 'react-router-dom'
 // Components
 import AdminBooks from 'components/admin/books/AdminBooks'
 import AdminMenu from 'components/admin/AdminMenu'
 import AdminUsers from 'components/admin/users/AdminUsers'
 import Layout from 'components/layout/Layout'
 import BookInfo from 'components/books/BookInfo'
-
+import Loading from 'components/misc/Loading'
 // Pages
 import Books from 'pages/Books'
 import Home from 'pages/Home'
@@ -16,31 +15,14 @@ import UserProfile from 'pages/UserProfile'
 // Routes
 import AdminRoute from 'routes/AdminRoute'
 import PrivateRoute from 'routes/PrivateRoute'
+import useToken from 'hooks/useToken'
 
-import { useEffect } from 'react'
-import { loginRequest } from 'actions'
-import AuthApi from 'services/auth.service'
+function App() {
+    const { loading, auth } = useToken()
 
-const mapDispatchToProps = {
-    loginRequest,
-}
+    if (loading) return <Loading />
+    if (!auth) return <Redirect to push='/home' />
 
-function App(props) {
-    const reloadSession = async () => {
-        if (window.localStorage.getItem('tokenSession')) {
-            const authApi = new AuthApi()
-            const data = await authApi.verifyToken()
-            if (data.token && data.user) {
-                props.loginRequest(data)
-                // history.push('/profile')
-                window.localStorage.setItem('tokenSession', data.token)
-            }
-        }
-    }
-
-    useEffect(() => {
-        reloadSession()
-    }, []) // eslint-disable-line react-hooks/exhaustive-deps
     return (
         <Router>
             <Layout>
@@ -48,27 +30,11 @@ function App(props) {
                     <Route exact path='/home' component={Home} />
                     <PrivateRoute exact path='/books' component={Books} />
                     <PrivateRoute exact path='/my-books' component={MyBooks} />
-                    <PrivateRoute
-                        exact
-                        path='/profile'
-                        component={UserProfile}
-                    />
-                    <PrivateRoute
-                        exact
-                        path='/book/:bookId'
-                        component={BookInfo}
-                    />
+                    <PrivateRoute exact path='/profile' component={UserProfile} />
+                    <PrivateRoute exact path='/book/:bookId' component={BookInfo} />
                     <AdminRoute exact path='/admin' component={AdminMenu} />
-                    <AdminRoute
-                        exact
-                        path='/admin/users'
-                        component={AdminUsers}
-                    />
-                    <AdminRoute
-                        exact
-                        path='/admin/books'
-                        component={AdminBooks}
-                    />
+                    <AdminRoute exact path='/admin/users' component={AdminUsers} />
+                    <AdminRoute exact path='/admin/books' component={AdminBooks} />
                     <PrivateRoute component={NotFound} />
                 </Switch>
             </Layout>
@@ -76,4 +42,4 @@ function App(props) {
     )
 }
 
-export default connect(null, mapDispatchToProps)(App)
+export default App
