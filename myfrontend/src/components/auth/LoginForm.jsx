@@ -31,10 +31,6 @@ function LoginForm(props) {
             props.loginRequest(data)
             props.history.push('/profile')
             window.localStorage.setItem('tokenSession', data.token)
-            // window.localStorage.setItem(
-            //     'userSession',
-            //     JSON.stringify(data.user)
-            // )
         }
         if (data.message) {
             setMessage(data.message)

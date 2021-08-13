@@ -1,4 +1,4 @@
-function UserForm({ form, setForm }) {
+function UserForm({ form, setForm, background }) {
     const handleInputChange = event => {
         setForm({
             ...form,
@@ -12,7 +12,7 @@ function UserForm({ form, setForm }) {
         })
     }
     return (
-        <form className='text-center card border-0 m-3'>
+        <form className={`text-center card border-0 m-3 ${background ? `bg-${background}` : ''}`}>
             <div className='form-floating mb-1'>
                 <input
                     className='form-control'

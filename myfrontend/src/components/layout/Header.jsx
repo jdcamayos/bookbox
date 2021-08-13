@@ -25,7 +25,7 @@ function Header(props) {
     const handleLogout = () => {
         props.logoutRequest({})
         window.localStorage.removeItem('tokenSession')
-        window.localStorage.removeItem('userSession')
+        // window.localStorage.removeItem('userSession')
         history.push('/home')
     }
     return (

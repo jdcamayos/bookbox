@@ -12,19 +12,22 @@ const mapDispatchToProps = {
     updateUser,
 }
 
+
+
 function AdminUserEditModal(props) {
+    const emptyForm = {
+        email: '',
+        firstName: '',
+        lastName: '',
+        isAdmin: false,
+        password: '',
+        repeatPassword: '',
+    }
     const { user, isNew } = props
     const [show, setShow] = useState(false)
     const [form, setForm] = useState(
         isNew
-            ? {
-                  email: '',
-                  firstName: '',
-                  lastName: '',
-                  isAdmin: false,
-                  password: '',
-                  repeatPassword: '',
-              }
+            ? emptyForm
             : {
                   email: user.email,
                   firstName: user.firstName,
@@ -58,8 +61,11 @@ function AdminUserEditModal(props) {
 
     const createUser = async usersApi => {
         const createdUserId = await usersApi.createUser({ user: form })
-        if (createdUserId) {
-            props.setUser({ _id: createdUserId, ...form })
+        if (createdUserId.data) {
+            delete form.password
+            props.setUser({ _id: createdUserId.data, ...form })
+            console.log(createdUserId.message, createdUserId.data)
+            setForm(emptyForm)
         }
     }
 
@@ -69,7 +75,8 @@ function AdminUserEditModal(props) {
             user: form,
         })
         if (updatedUserId) {
-            props.updateUser({ _id: updatedUserId, ...form })
+            props.updateUser({ _id: updatedUserId.data, ...form })
+            console.log(updatedUserId.message, updatedUserId.data)
         }
     }
 

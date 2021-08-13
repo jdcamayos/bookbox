@@ -50,7 +50,7 @@ const reducer = (state, action) => {
                 ...state,
                 books: [
                     ...state.books.filter(
-                        item => item._id !== action.payload._id
+                        item => item._id !== action.payload
                     ),
                 ],
             }
@@ -80,7 +80,7 @@ const reducer = (state, action) => {
                 ...state,
                 users: [
                     ...state.users.filter(
-                        item => item._id !== action.payload._id
+                        item => item._id !== action.payload
                     ),
                 ],
             }

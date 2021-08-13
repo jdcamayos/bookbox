@@ -15,11 +15,10 @@ function AdminUsersTable(props) {
                     </tr>
                 </thead>
                 <tbody>
-                    {users.length
-                        ? users.map(user => (
-                              <AdminUserRow key={user._id} user={user} />
-                          ))
-                        : null}
+                    {users.length &&
+                        users.map(user => (
+                            <AdminUserRow key={user._id} user={user} />
+                        ))}
                 </tbody>
             </table>
         </section>

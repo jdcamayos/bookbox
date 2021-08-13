@@ -19,8 +19,10 @@ function AdminUserDeleteModal(props) {
     const handleDelete = async () => {
         const usersApi = new UsersApi()
         const deletedUserId = await usersApi.deleteUser({ userId: _id })
+        console.log(deletedUserId)
         if (deletedUserId) {
-            props.deleteUser({ _id: deletedUserId })
+            props.deleteUser(deletedUserId.data)
+            console.log(deletedUserId.message, deletedUserId.data)
         }
         handleClose()
     }

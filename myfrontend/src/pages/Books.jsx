@@ -5,7 +5,7 @@ function Books() {
     return (
         <main className='container'>
             <HeaderPage title='Libros'>
-                <form className='d-flex'>
+                {/* <form className='d-flex'>
                     <input
                         type='search'
                         className='form-control me-2  alert-warning'
@@ -14,7 +14,7 @@ function Books() {
                     <button className='btn btn-outline-dark' type='submit'>
                         Buscar
                     </button>
-                </form>
+                </form> */}
             </HeaderPage>
             <BooksContainer />
         </main>

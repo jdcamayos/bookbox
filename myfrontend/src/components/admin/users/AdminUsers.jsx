@@ -1,44 +1,23 @@
-import { useEffect, useState } from 'react'
-import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 import Loading from 'components/misc/Loading'
 import HeaderPage from 'components/misc/HeaderPage'
 import AdminUsersTable from 'components/admin/users/AdminUsersTable'
 import AdminUserEditModal from 'components/admin/users/AdminUserEditModal'
 
-import { getUsers } from 'actions'
-import UsersApi from 'services/users.service'
+import useUsers from 'hooks/useUsers'
 
-const mapStateToProp = state => {
-    return {
-        users: state.users,
-    }
-}
-
-const mapDispatchToProps = {
-    getUsers,
-}
-
-function AdminUsers(props) {
-    const { users } = props
-    const [loading, setLoading] = useState(true)
-
-    const fetchUsers = async () => {
-        const usersApi = new UsersApi()
-        const fetchedUsers = await usersApi.getUsers()
-        props.getUsers(fetchedUsers.data)
-        setLoading(false)
-    }
-
-    useEffect(() => {
-        fetchUsers()
-    }, []) // eslint-disable-line react-hooks/exhaustive-deps
+function AdminUsers() {
+    const { users, loading } = useUsers()
 
     if (loading) return <Loading />
 
     return (
         <main className='container'>
             <HeaderPage title='Administración de usuarios'>
+                <Link to='/admin' className='btn btn-outline-dark mx-3'>
+                    Atras
+                </Link>
                 <AdminUserEditModal isNew />
             </HeaderPage>
             <AdminUsersTable users={users} />
@@ -46,4 +25,4 @@ function AdminUsers(props) {
     )
 }
 
-export default connect(mapStateToProp, mapDispatchToProps)(AdminUsers)
+export default AdminUsers

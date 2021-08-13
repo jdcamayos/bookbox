@@ -1,13 +1,10 @@
-import { connect } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { Route, Redirect } from 'react-router-dom'
+import useToken from 'hooks/useToken'
 
-const mapStateToProps = (state, props) => {
-    return {
-        auth: state.auth
-    }
-}
-
-function PrivateRoute({ component: Component, auth, ...rest }) {
+function PrivateRoute({ component: Component, ...rest }) {
+    const auth = useSelector(state => state.auth)
+    useToken()
     return (
         <Route
             {...rest}
@@ -22,6 +19,4 @@ function PrivateRoute({ component: Component, auth, ...rest }) {
     )
 }
 
-export default connect(mapStateToProps, null)(PrivateRoute)
-
-
+export default PrivateRoute

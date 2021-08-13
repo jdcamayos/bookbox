@@ -16,11 +16,10 @@ function AdminBooksTable(props) {
                     </tr>
                 </thead>
                 <tbody>
-                    {books.length
-                        ? books.map(book => (
-                              <AdminBookRow key={book._id} book={book} />
-                          ))
-                        : null}
+                    {books.length &&
+                        books.map(book => (
+                            <AdminBookRow key={book._id} book={book} />
+                        ))}
                 </tbody>
             </table>
         </section>

@@ -1,14 +1,11 @@
-import { connect } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { Route, Redirect } from 'react-router-dom'
+import useToken from 'hooks/useToken'
 
-const mapStateToProps = (state, props) => {
-    return {
-        auth: state.auth,
-        user: state.user
-    }
-}
-
-function AdminRoute({ component: Component, auth, user, ...rest }) {
+function AdminRoute({ component: Component, ...rest }) {
+    const auth = useSelector(state => state.auth)
+    const user = useSelector(state => state.user)
+    useToken()
     return (
         <Route
             {...rest}
@@ -23,6 +20,6 @@ function AdminRoute({ component: Component, auth, user, ...rest }) {
     )
 }
 
-export default connect(mapStateToProps, null)(AdminRoute)
+export default AdminRoute
 
 

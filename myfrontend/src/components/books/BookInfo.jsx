@@ -7,11 +7,6 @@ import Loading from 'components/misc/Loading'
 import BooksApi from 'services/books.service'
 import HeaderPage from 'components/misc/HeaderPage'
 import BookButton from './BookButton'
-// import { getBook } from 'actions'
-
-// const mapDispatchToProps = {
-//     getBook,
-// }
 
 const mapStateToProps = state => {
     return {

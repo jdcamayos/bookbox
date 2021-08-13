@@ -1,50 +1,28 @@
-import { useEffect, useState } from 'react'
-import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 import Loading from 'components/misc/Loading'
 import HeaderPage from 'components/misc/HeaderPage'
 import AdminBooksTable from 'components/admin/books/AdminBooksTable'
 import AdminBookEditModal from './AdminBookEditModal'
 
-import { getBooks } from 'actions'
-import BooksApi from 'services/books.service'
+import useBooks from 'hooks/useBooks'
 
-const mapStateToProp = state => {
-    return {
-        books: state.books,
-    }
-}
-
-const mapDispatchToProps = {
-    getBooks,
-}
-
-function AdminBooks(props) {
-    const { books } = props
-    const [loading, setLoading] = useState(true)
-
-    const fetchBooks = async () => {
-        const booksApi = new BooksApi()
-        const fetchedBooks = await booksApi.getBooks()
-        props.getBooks(fetchedBooks.data)
-        setLoading(false)
-    }
-
-    useEffect(() => {
-        fetchBooks()
-    }, []) // eslint-disable-line react-hooks/exhaustive-deps
+function AdminBooks() {
+    const { books, loading } = useBooks()
 
     if (loading) return <Loading />
 
     return (
         <main className='container'>
             <HeaderPage title='Administación de libros'>
+                <Link to='/admin' className='btn btn-outline-dark mx-3'>
+                    Atras
+                </Link>
                 <AdminBookEditModal isNew />
             </HeaderPage>
             <AdminBooksTable books={books} />
-            
         </main>
     )
 }
 
-export default connect(mapStateToProp, mapDispatchToProps)(AdminBooks)
+export default AdminBooks

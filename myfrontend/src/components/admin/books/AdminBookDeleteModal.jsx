@@ -20,7 +20,8 @@ function AdminBookDeleteModal(props) {
         const booksApi = new BooksApi()
         const deletedBookId = await booksApi.deleteBook({ bookId: _id })
         if (deletedBookId) {
-            props.deleteBook({ _id: deletedBookId })
+            props.deleteBook(deletedBookId.data)
+            console.log(deletedBookId.message, deletedBookId.data)
         }
         handleClose()
     }

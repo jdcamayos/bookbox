@@ -4,40 +4,55 @@ import jwt from 'jsonwebtoken'
 
 import { loginRequest } from 'actions'
 import AuthApi from 'services/auth.service'
-import moment from 'moment'
 
 function useToken() {
     const [loading, setLoading] = useState(true)
     const dispatch = useDispatch()
-
+    
     const reloadSession = async () => {
+        console.log('Verifying token status...')
         if (window.localStorage.getItem('tokenSession')) {
             const decodedToken = jwt.decode(
                 window.localStorage.getItem('tokenSession')
             )
-            console.log(moment(decodedToken.iat * 1000).format('LT'))
-            console.log(moment(new Date()).format('LT'))
-            console.log(moment(decodedToken.exp * 1000).format('LT'))
-            if (new Date().getTime() > decodedToken.exp * 1000) {
-                console.log('Tu sesion ha expirado')
-                setLoading(false)
-                return { loading, auth: false }
+            const tokenExp = decodedToken.exp * 1000
+            // Verifying token expired time
+            if (new Date().getTime() > tokenExp) {
+                tokenExpired()
+                return
             }
-            const authApi = new AuthApi()
-            const data = await authApi.verifyToken()
-            if (data.token && data.user) {
-                dispatch(loginRequest(data))
-                window.localStorage.setItem('tokenSession', data.token)
+            // Renewed token
+            if (new Date().getTime() < tokenExp) {
+                await tokenRequest()
+                return
             }
-            setLoading(false)
+        } else {
+            tokenExpired()
+            return
         }
+    }
+
+    const tokenExpired = () => {
+        console.log('Token expired or non-existent')
+        setLoading(false)
+    }
+
+    const tokenRequest = async () => {
+        const authApi = new AuthApi()
+        const data = await authApi.verifyToken()
+        if (data.token && data.user) {
+            dispatch(loginRequest(data))
+            window.localStorage.setItem('tokenSession', data.token)
+            console.log('Token renewed')
+        }
+        setLoading(false)
     }
 
     useEffect(() => {
         reloadSession()
     }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
-    return { loading, auth: true }
+    return { loading }
 }
 
 export default useToken

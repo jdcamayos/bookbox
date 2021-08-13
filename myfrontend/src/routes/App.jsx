@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Redirect, Route, Switch, } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch, } from 'react-router-dom'
 // Components
 import AdminBooks from 'components/admin/books/AdminBooks'
 import AdminMenu from 'components/admin/AdminMenu'
@@ -18,10 +18,9 @@ import PrivateRoute from 'routes/PrivateRoute'
 import useToken from 'hooks/useToken'
 
 function App() {
-    const { loading, auth } = useToken()
+    const { loading } = useToken()
 
     if (loading) return <Loading />
-    if (!auth) return <Redirect to push='/home' />
 
     return (
         <Router>
@@ -33,7 +32,7 @@ function App() {
                     <PrivateRoute exact path='/profile' component={UserProfile} />
                     <PrivateRoute exact path='/book/:bookId' component={BookInfo} />
                     <AdminRoute exact path='/admin' component={AdminMenu} />
-                    <AdminRoute exact path='/admin/users' component={AdminUsers} />
+                    <AdminRoute exact path='/admin/users/' component={AdminUsers} />
                     <AdminRoute exact path='/admin/books' component={AdminBooks} />
                     <PrivateRoute component={NotFound} />
                 </Switch>

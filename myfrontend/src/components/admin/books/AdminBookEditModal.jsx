@@ -13,18 +13,19 @@ const mapDispatchToProps = {
 }
 
 function AdminBookEditModal(props) {
+    const emptyForm = {
+        title: '',
+        author: '',
+        description: '',
+        date: 0,
+        cover: '',
+        tags: [],
+    }
     const { book, isNew } = props
     const [show, setShow] = useState(false)
     const [form, setForm] = useState(
         isNew
-            ? {
-                  title: '',
-                  author: '',
-                  description: '',
-                  date: 0,
-                  cover: '',
-                  tags: [],
-              }
+            ? emptyForm
             : {
                   title: book.title,
                   author: book.author,
@@ -52,7 +53,9 @@ function AdminBookEditModal(props) {
     const createBook = async booksApi => {
         const createdBookId = await booksApi.createBook({ book: form })
         if (createdBookId) {
-            props.setBook({ _id: createdBookId, ...form })
+            props.setBook({ _id: createdBookId.data, ...form })
+            console.log(createdBookId.message, createdBookId.data)
+            setForm(emptyForm)
         }
     }
 
@@ -62,7 +65,8 @@ function AdminBookEditModal(props) {
             book: form,
         })
         if (updatedBookId) {
-            props.updateBook({ _id: updatedBookId, ...form })
+            props.updateBook({ _id: updatedBookId.data, ...form })
+            console.log(updatedBookId.message, updatedBookId.data)
         }
     }
 
